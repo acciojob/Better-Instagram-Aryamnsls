@@ -1,41 +1,57 @@
-let dragged = null;
-
-document.querySelectorAll('.image').forEach(item => {
-  item.addEventListener('dragstart', e => {
-    dragged = e.target;
-    e.target.classList.add("dragging");
+describe("Drag and Drop Tests", () => {
+  beforeEach(() => {
+    cy.visit("YOUR_PAGE_URL_HERE"); // Replace with your actual HTML page path
   });
 
-  item.addEventListener('dragend', e => {
-    e.target.classList.remove("dragging");
-    dragged = null;
-  });
-
-  item.addEventListener('dragover', e => {
-    e.preventDefault();
-  });
-
-  item.addEventListener('drop', e => {
-    e.preventDefault();
-
-    // Ensure you're getting the correct target (parent div)
-    let dropTarget = e.target;
-    if (!dropTarget.classList.contains('image')) {
-      dropTarget = dropTarget.closest('.image');
+  it("Check if all draggable items exist", () => {
+    for (let index = 1; index <= 6; index++) {
+      cy.get(`#drag${index}`).should("exist");
     }
+  });
 
-    if (dragged && dropTarget && dragged !== dropTarget) {
-      // Swap background images
-      const draggedBg = dragged.style.backgroundImage;
-      const targetBg = dropTarget.style.backgroundImage;
-
-      dragged.style.backgroundImage = targetBg;
-      dropTarget.style.backgroundImage = draggedBg;
-
-      // Swap text content
-      const tempText = dragged.textContent;
-      dragged.textContent = dropTarget.textContent;
-      dropTarget.textContent = tempText;
+  it("Check if all div containers exist", () => {
+    for (let index = 1; index <= 6; index++) {
+      cy.get(`#div${index}`).should("exist");
     }
+  });
+
+  const triggerDragAndDrop = (sourceSelector, targetSelector) => {
+    cy.get(sourceSelector).then(($source) => {
+      const dataTransfer = new DataTransfer();
+
+      cy.wrap($source)
+        .trigger("dragstart", { dataTransfer })
+        .trigger("drag", { dataTransfer });
+
+      cy.get(targetSelector)
+        .trigger("dragover", { dataTransfer })
+        .trigger("drop", { dataTransfer });
+
+      cy.wrap($source).trigger("dragend", { dataTransfer });
+    });
+  };
+
+  it("Drag drag3 to drag6", () => {
+    triggerDragAndDrop("#drag3", "#drag6");
+  });
+
+  it("Drag drag1 to drag5", () => {
+    triggerDragAndDrop("#drag1", "#drag5");
+  });
+
+  it("Drag drag4 to drag2", () => {
+    triggerDragAndDrop("#drag4", "#drag2");
+  });
+
+  it("Drag drag2 to drag3", () => {
+    triggerDragAndDrop("#drag2", "#drag3");
+  });
+
+  it("Drag drag5 to drag3", () => {
+    triggerDragAndDrop("#drag5", "#drag3");
+  });
+
+  it("Drag drag6 to drag1", () => {
+    triggerDragAndDrop("#drag6", "#drag1");
   });
 });
