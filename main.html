@@ -3,17 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <title>Drag and Drop</title>
-  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .dropzone {
+      width: 100px;
+      height: 100px;
+      border: 2px dashed #ccc;
+      display: inline-block;
+      margin: 10px;
+    }
+    .image {
+      width: 90px;
+      height: 90px;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <div id="div1" class="dropzone"><div id="drag1" class="image" draggable="true">1</div></div>
-    <div id="div2" class="dropzone"><div id="drag2" class="image" draggable="true">2</div></div>
-    <div id="div3" class="dropzone"><div id="drag3" class="image" draggable="true">3</div></div>
-    <div id="div4" class="dropzone"><div id="drag4" class="image" draggable="true">4</div></div>
-    <div id="div5" class="dropzone"><div id="drag5" class="image" draggable="true">5</div></div>
-    <div id="div6" class="dropzone"><div id="drag6" class="image" draggable="true">6</div></div>
-  </div>
+  <div id="div1" class="dropzone"><img id="drag1" src="https://via.placeholder.com/90" draggable="true" class="image" /></div>
+  <div id="div2" class="dropzone"><img id="drag2" src="https://via.placeholder.com/90" draggable="true" class="image" /></div>
+  <div id="div3" class="dropzone"><img id="drag3" src="https://via.placeholder.com/90" draggable="true" class="image" /></div>
+  <div id="div4" class="dropzone"><img id="drag4" src="https://via.placeholder.com/90" draggable="true" class="image" /></div>
+  <div id="div5" class="dropzone"><img id="drag5" src="https://via.placeholder.com/90" draggable="true" class="image" /></div>
+  <div id="div6" class="dropzone"><img id="drag6" src="https://via.placeholder.com/90" draggable="true" class="image" /></div>
+
   <script src="script.js"></script>
 </body>
 </html>

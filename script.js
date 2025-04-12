@@ -20,6 +20,7 @@ document.querySelectorAll('.dropzone').forEach(zone => {
   zone.addEventListener('drop', e => {
     e.preventDefault();
     if (dragged && zone !== dragged.parentElement) {
+      zone.innerHTML = ''; // optional: clear before drop
       zone.appendChild(dragged);
     }
   });
