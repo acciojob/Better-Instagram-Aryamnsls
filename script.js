@@ -8,26 +8,34 @@ document.querySelectorAll('.image').forEach(item => {
 
   item.addEventListener('dragend', e => {
     e.target.classList.remove("dragging");
+    dragged = null;
   });
 
   item.addEventListener('dragover', e => {
-    e.preventDefault(); // Needed to allow drop
+    e.preventDefault();
   });
 
   item.addEventListener('drop', e => {
     e.preventDefault();
-    if (dragged && dragged !== e.target) {
+
+    // Ensure you're getting the correct target (parent div)
+    let dropTarget = e.target;
+    if (!dropTarget.classList.contains('image')) {
+      dropTarget = dropTarget.closest('.image');
+    }
+
+    if (dragged && dropTarget && dragged !== dropTarget) {
       // Swap background images
-      const draggedBg = window.getComputedStyle(dragged).backgroundImage;
-      const targetBg = window.getComputedStyle(e.target).backgroundImage;
+      const draggedBg = dragged.style.backgroundImage;
+      const targetBg = dropTarget.style.backgroundImage;
 
       dragged.style.backgroundImage = targetBg;
-      e.target.style.backgroundImage = draggedBg;
+      dropTarget.style.backgroundImage = draggedBg;
 
       // Swap text content
       const tempText = dragged.textContent;
-      dragged.textContent = e.target.textContent;
-      e.target.textContent = tempText;
+      dragged.textContent = dropTarget.textContent;
+      dropTarget.textContent = tempText;
     }
   });
 });
